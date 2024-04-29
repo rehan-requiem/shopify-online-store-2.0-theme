@@ -3,59 +3,48 @@
     <div class="flex justify-center items-center py-6 md:justify-start md:space-x-10">
       <!-- STORE NAME / STORE LOGO -->
       <div class="flex justify-start lg:flex-1 truncate">
-        <h2 class="text-xl font-bold truncate">{{ shop.name }}</h2>
+        <h1 class="text-xl font-bold truncate">{{ shop.name }}</h1>
       </div>
 
       <!-- NAVIGATION MENU -->
-      <nav class="hidden md:flex space-x-10">
+      <nav x-data="{open: false}" class="hidden md:flex space-x-10">
+
         {% for link in linklists['main-menu'].links %}
-          {% if link.links != blank %}
-            {% for childLink1 in link.links %}
-              <div class="relative">
+          {% if link.links != empty %}
+            <div class="relative">
+              <button
+                @click="open = !open"
+                type="button"
+                class="inline-flex items-center text-base text-gray-500 hover:text-gray-900">
+                {{ link.title }}
+                {% render 'icon-dropdown' %}
+              </button>
 
-                <button type="button" class="inline-flex items-center justify-center text-base text-gray-500 hover:text-gray-900">
-                  {{ link.title }}
-                  {% render 'icon-dropdown' %}
-                </button>
+              <div
+                @click.away="open = false"
+                x-show="open"
+                class="absolute z-10 -ml-5 mt-5 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
 
-                <div class="absolute z-10 -ml-5 mt-5 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
+                <div class="shadow-lg border ring-black ring-opacity-5 overflow-hidden rounded-lg">
 
-                  <div class="shadow-lg border ring-black ring-opacity-5 overflow-hidden rounded-lg">
-
-                    <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-
-                      <!-- CREATE THE SUBLINK -->
-                      <a class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
+                  <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                    {% for childLink in link.links %}
+                      <a href="{{ childLink.url }}" class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
                         <div class="ml-4">
                           <p class="text-gray-900 text-base font-medium">
-                            Sublink 1
+                            {{ childLink.title }}
                           </p>
                         </div>
                       </a>
+                    {% endfor %}
 
-                      <a class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
-                        <div class="ml-4">
-                          <p class="text-gray-900 text-base font-medium">
-                            Sublink 2
-                          </p>
-                        </div>
-                      </a>
+                  <!-- CREATE THE SUBLINK -->
 
-                      <a class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
-                        <div class="ml-4">
-                          <p class="text-gray-900 text-base font-medium">
-                            Sublink 3
-                          </p>
-                        </div>
-                      </a>
 
-                    </div>
                   </div>
                 </div>
-
               </div>
-
-            {% endfor %}
+            </div>
 
           {% else %}
             <div class="relative">
@@ -63,15 +52,19 @@
             </div>
 
           {% endif %}
+
+
         {% endfor %}
+
+
       </nav>
 
       <div class="hidden md:flex items-center justify-end md:flex-1 space-x-5">
         <a href="{{ routes.cart_url }}" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
-          {% render 'icon-shopping-bag' %}
+          Cart
         </a>
 
-        <a href="{{ routes.account_login_url}}" class="text-base text-gray-500 hover:text-gray-900">Login</a>
+        <a href="{{ routes.account_login_url }}" class="text-base text-gray-500 hover:text-gray-900">Login</a>
         <a href="{{ routes.account_register_url }}" class="text-base text-gray-500 hover:text-gray-900">Register</a>
       </div>
     </div>
