@@ -1,9 +1,15 @@
-<div class="relative bg-white">
+<div x-data="{ mobileMenuOpen: false }" class="relative bg-white">
   <div class="mx-auto px-4 sm:px-6">
-    <div class="flex justify-center items-center py-6 md:justify-start md:space-x-10">
+    <div class="flex justify-between lg:justify-center items-center py-6 md:space-x-10">
       <!-- STORE NAME / STORE LOGO -->
       <div class="flex justify-start lg:flex-1 truncate">
         <h1 class="text-xl font-bold truncate">{{ shop.name }}</h1>
+      </div>
+
+      <div class="-mr-2 -my-2 ml-3 md:hidden">
+        <button type="button" class="bg-white p-2 inline-flex items-center justify-center focus:outline-none">
+          {% render 'icon-hamburger-menu' %}
+        </button>
       </div>
 
       <!-- NAVIGATION MENU -->
@@ -21,6 +27,7 @@
               </button>
 
               <div
+                x-cloak
                 @click.away="open = false"
                 x-show="open"
                 class="absolute z-10 -ml-5 mt-5 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
@@ -61,11 +68,76 @@
 
       <div class="hidden md:flex items-center justify-end md:flex-1 space-x-5">
         <a href="{{ routes.cart_url }}" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
-          Cart
+          {% render 'icon-shopping-bag' %}
         </a>
 
         <a href="{{ routes.account_login_url }}" class="text-base text-gray-500 hover:text-gray-900">Login</a>
         <a href="{{ routes.account_register_url }}" class="text-base text-gray-500 hover:text-gray-900">Register</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute z-10 top-0 inset-x-0 p-2 transform origin-top-left md:hidden">
+    <div class="shadow-lg rounded-lg ring-1 ring-black ring-opacity-5 bg-white w-full">
+      <div class="p-5 divide-y-2 divide-gray-50">
+
+        <!-- MOBILE MENU HEADER TITLE PLUS CLOSE BUTTON -->
+        <div class="flex items-center justify-between pb-3">
+          <div>
+            <h1 class="text-lg text-gray-500">{{ shop.name }}</h1>
+          </div>
+          <div class="-mr-2">
+            <button type="button" class="bg-white rounded-md p-2 text-gray-500">
+              {% render 'icon-close' %}
+            </button>
+          </div>
+        </div>
+
+        <!-- NAVIGATION LINKS FOR MOBILE MENU -->
+        <div class="pt-3">
+          <nav x-data="{
+            open: false
+          }" class="grid gap-y-7">
+
+            {% for link in linklists['main-menu'].links %}
+              {% if link.links != empty %}
+                <div class="relative">
+                  <button
+                    x-transition
+                    @click="open = !open"
+                    type="button"
+                    class="text-base text-gray-500 hover:text-gray-900 flex items-center justify-between w-full">
+                    <div>
+                      {{ link.title }}</div>
+                    {% render 'icon-dropdown' %}
+                  </button>
+
+                  <div
+                    x-cloak
+                    x-transition
+                    x-show="open"
+                    @click.away="open = false"
+                    class="grid gap-y-7 py-3">
+                    {% for childLink in link.links %}
+                      <a href="{{ childLink.url }}" class="-m-3 p-3 mt-2 flex items-center rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-50">
+                        <span class="ml-3 text-base font-medium text-gray-500">{{ childLink.title }}</span>
+                      </a>
+                    {% endfor %}
+
+
+                  </div>
+                </div>
+
+              {% else %}
+                <a href="{{ link.url }}" class="-m-3 p-3 flex items-center rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-50">
+                  {{ link.title }}
+                </a>
+              {% endif %}
+            {% endfor %}
+
+
+          </nav>
+        </div>
       </div>
     </div>
   </div>
