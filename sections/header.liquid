@@ -7,7 +7,10 @@
       </div>
 
       <div class="-mr-2 -my-2 ml-3 md:hidden">
-        <button type="button" class="bg-white p-2 inline-flex items-center justify-center focus:outline-none">
+        <button
+          @click="mobileMenuOpen = true"
+          type="button"
+          class="bg-white p-2 inline-flex items-center justify-center focus:outline-none">
           {% render 'icon-hamburger-menu' %}
         </button>
       </div>
@@ -77,7 +80,11 @@
     </div>
   </div>
 
-  <div class="absolute z-10 top-0 inset-x-0 p-2 transform origin-top-left md:hidden">
+  <div
+    x-show="mobileMenuOpen"
+    x-cloak
+    x-transition
+    class="absolute z-10 top-0 inset-x-0 p-2 transform origin-top-left md:hidden">
     <div class="shadow-lg rounded-lg ring-1 ring-black ring-opacity-5 bg-white w-full">
       <div class="p-5 divide-y-2 divide-gray-50">
 
@@ -87,7 +94,10 @@
             <h1 class="text-lg text-gray-500">{{ shop.name }}</h1>
           </div>
           <div class="-mr-2">
-            <button type="button" class="bg-white rounded-md p-2 text-gray-500">
+            <button
+              @click="mobileMenuOpen = false"
+              type="button"
+              class="bg-white rounded-md p-2 text-gray-500">
               {% render 'icon-close' %}
             </button>
           </div>
