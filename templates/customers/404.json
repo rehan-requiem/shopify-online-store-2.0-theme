@@ -1,10 +1,8 @@
 {
     "name": "Template 404",
-    "layout": "custom-theme",
-    "wrapper": "div#404-template.container.w-full.h-full.p-4.flex.justify-center",
     "sections": {
         "template-404": {
-            "type": "example-404"
+            "type": "template-404"
         }
     },
     "order": [
