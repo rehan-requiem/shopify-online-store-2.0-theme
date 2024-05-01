@@ -16,10 +16,13 @@
       </div>
 
       <!-- NAVIGATION MENU -->
-      <nav x-data="{open: false}" class="hidden md:flex space-x-10">
+      <nav x-data="{
+        open: false,
+        secondDropdown: false
+        }" class="hidden md:flex space-x-10">
 
         {% for link in linklists['main-menu'].links %}
-          {% if link.links != empty %}
+          {% if link.links != blank %}
             <div class="relative">
               <button
                 @click="open = !open"
@@ -39,13 +42,41 @@
 
                   <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                     {% for childLink in link.links %}
-                      <a href="{{ childLink.url }}" class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
-                        <div class="ml-4">
-                          <p class="text-gray-900 text-base font-medium">
-                            {{ childLink.title }}
-                          </p>
+                      {% if childLink.links != blank %}
+                        <button
+                          @click="secondDropdown = !secondDropdown"
+                          type="button"
+                          class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100 text-gray-900 text-base font-medium pl-6">
+                          {{ childLink.title }}
+                          {% render 'icon-dropdown' %}
+                        </button>
+                        <div
+                          x-transition
+                          x-cloak
+                          x-show="secondDropdown"
+                          class="relative ml-6 grid gap-6 bg-white  ">
+
+                          {% for childLink2 in childLink.links %}
+                            <a href="{{ childLink2.url }}" class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
+                              <div class="">
+                                <p class="text-gray-900 text-base font-small">
+                                  {{ childLink2.title }}
+                                </p>
+                              </div>
+                            </a>
+                          {% endfor %}
                         </div>
-                      </a>
+                      {% else %}
+                        <a href="{{ childLink.url }}" class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
+                          <div class="ml-4">
+                            <p class="text-gray-900 text-base font-medium">
+                              {{ childLink.title }}
+                            </p>
+                          </div>
+                        </a>
+
+                      {% endif %}
+
                     {% endfor %}
 
                   <!-- CREATE THE SUBLINK -->
@@ -152,3 +183,10 @@
     </div>
   </div>
 </div>
+
+{% schema %}
+  {
+    "name": "Nav Bar",
+    "settings": []
+  }
+{% endschema %}
