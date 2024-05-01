@@ -1,9 +1,7 @@
 {
-  "layout": "custom-theme",
-  "wrapper": "div#404-template.container.bg-black",
   "sections": {
     "template-404": {
-      "type": "example-404",
+      "type": "template-404",
       "settings": {
       }
     }
