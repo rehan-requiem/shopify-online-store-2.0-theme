@@ -1,6 +1,6 @@
 {
   "layout": "custom-theme",
-  "wrapper": "div#404-template.custom-404",
+  "wrapper": "div#404-template.container",
   "sections": {
     "template-404": {
       "type": "example-404",
