@@ -1,3 +1,7 @@
+{% assign desktop-link-list = linklists[section.settings.desktop-header-menu] %}
+{% assign mobile-link-list = linklists[section.settings.mobile-header-menu] %}
+
+
 <div x-data="{ mobileMenuOpen: false }" class="relative bg-white">
   <div class="mx-auto px-4 sm:px-6">
     <div class="flex justify-between lg:justify-center items-center py-6 md:space-x-10">
@@ -23,7 +27,7 @@
         secondDropdown: false
         }" class="hidden md:flex space-x-10">
 
-        {% for link in linklists['main-menu'].links %}
+        {% for link in desktop-link-list %}
           {% if link.links != blank %}
             <div class="relative">
               <button
@@ -147,7 +151,7 @@
             
           }" class="grid gap-y-7">
 
-            {% for link in linklists['main-menu'].links %}
+            {% for link in mobile-link-list %}
               {% if link.links != empty %}
                 <div class="relative">
                   <button
@@ -231,6 +235,18 @@
         "label": "Title",
         "default": "Menu",
         "info": "Setting to customize the header title for mobile menu"
+      }, {
+        "type": "link_list",
+        "id": "desktop-header-menu",
+        "default": "main-menu",
+        "label": "Desktop Menu",
+        "info": "Menu to display on desktop header"
+      }, {
+        "type": "link_list",
+        "id": "mobile-header-menu",
+        "default": "main-menu",
+        "label": "Mobile Menu",
+        "info": "Menu to display on mobile header"
       }
     ]
   }
