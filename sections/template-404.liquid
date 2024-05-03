@@ -1,10 +1,18 @@
 <div class="max-w-md flex flex-col gap-5 justify-center items-center">
+  <i style="color: {{ section.settings.icon_color }}" class="fa fa-triangle-exclamation text-6xl text-yellow-600"></i>
   <div class="text-5xl font-bold">{{ section.settings.title }}</div>
   <div>
     <p class="text-base md:text-xl leading-normal">{{ section.settings.subtext }}</p>
   </div>
 
-  <a href="{{ section.settings.button_url }}" class="py-3 px-5 w-fit bg-gray-800 hover:bg-gray-900 text-white rounded-md">{{ section.settings.button_label }}</a>
+  {% if section.settings.button_url == blank %}
+    {% assign shop_url = shop.secure_url %}
+
+  {% else %}
+    {% assign shop_url = section.settings.button_url %}
+  {% endif %}
+
+  <a href="{{ shop_url }}" class="py-2 px-5 transition-all ease-linear duration-200 bg-gray-800 hover:bg-gray-900 hover:scale-110 text-white rounded-md shadow-sm">{{ section.settings.button_label }}</a>
 </div>
 
 
@@ -20,21 +28,29 @@
         "id": "title",
         "label": "Title",
         "default": "404 Not Found"
-      }, {
+      },
+      {
         "type": "text",
         "id": "subtext",
         "label": "Subtext",
         "default": "The page you are looking for does not exist."
-      }, {
+      },
+      {
         "type": "text",
         "id": "button_label",
         "default": "Go back",
         "label": "Button label"
-      }, {
+      },
+      {
         "type": "url",
         "id": "button_url",
         "default": "/",
         "label": "Button link"
+      }, {
+        "type": "color",
+        "id": "icon_color",
+        "label": "Icon color",
+        "default": "#EAB308"
       }
     ]
   }
