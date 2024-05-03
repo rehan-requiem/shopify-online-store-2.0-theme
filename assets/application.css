@@ -635,8 +635,8 @@ video {
   margin-top: 1.25rem;
 }
 
-.inline-block {
-  display: inline-block;
+.mt-2 {
+  margin-top: 0.5rem;
 }
 
 .inline-block {
