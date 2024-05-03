@@ -1,6 +1,21 @@
 {
-  "current": "Default",
+  "current": {
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "mobile-menu-title": "Menu",
+          "desktop-header-menu": "main-menu",
+          "mobile-header-menu": "main-menu"
+        }
+      }
+    },
+    "content_for_index": [
+
+    ]
+  },
   "presets": {
-    "Default": { }
+    "Default": {
+    }
   }
 }

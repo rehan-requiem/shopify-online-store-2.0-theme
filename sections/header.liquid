@@ -1,9 +1,15 @@
+{% assign desktop-link-list = linklists[section.settings.desktop-header-menu].links %}
+{% assign mobile-link-list = linklists[section.settings.mobile-header-menu].links %}
+
+
 <div x-data="{ mobileMenuOpen: false }" class="relative bg-white">
   <div class="mx-auto px-4 sm:px-6">
     <div class="flex justify-between lg:justify-center items-center py-6 md:space-x-10">
       <!-- STORE NAME / STORE LOGO -->
       <div class="flex justify-start lg:flex-1 truncate">
-        <h1 class="text-xl font-bold truncate">{{ shop.name }}</h1>
+        <a href="/">
+          <h2 class="text-xl font-bold truncate">{{ shop.name }}</h2>
+        </a>
       </div>
 
       <div class="-mr-2 -my-2 ml-3 md:hidden">
@@ -16,10 +22,13 @@
       </div>
 
       <!-- NAVIGATION MENU -->
-      <nav x-data="{open: false}" class="hidden md:flex space-x-10">
+      <nav x-data="{
+        open: false,
+        secondDropdown: false
+        }" class="hidden md:flex space-x-10">
 
-        {% for link in linklists['main-menu'].links %}
-          {% if link.links != empty %}
+        {% for link in desktop-link-list %}
+          {% if link.links != blank %}
             <div class="relative">
               <button
                 @click="open = !open"
@@ -39,13 +48,42 @@
 
                   <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                     {% for childLink in link.links %}
-                      <a href="{{ childLink.url }}" class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
-                        <div class="ml-4">
-                          <p class="text-gray-900 text-base font-medium">
-                            {{ childLink.title }}
-                          </p>
+                      {% if childLink.links != blank %}
+                        <button
+                          @click="secondDropdown = !secondDropdown"
+                          @click.away="secondDropdown = false"
+                          type="button"
+                          class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100 text-gray-900 text-base font-medium pl-7">
+                          {{ childLink.title }}
+                          {% render 'icon-dropdown' %}
+                        </button>
+                        <div
+                          x-transition
+                          x-cloak
+                          x-show="secondDropdown"
+                          class="relative ml-6 grid gap-6 bg-white  ">
+
+                          {% for childLink2 in childLink.links %}
+                            <a href="{{ childLink2.url }}" class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
+                              <div class="">
+                                <p class="text-gray-900 text-base font-small">
+                                  {{ childLink2.title }}
+                                </p>
+                              </div>
+                            </a>
+                          {% endfor %}
                         </div>
-                      </a>
+                      {% else %}
+                        <a href="{{ childLink.url }}" class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
+                          <div class="ml-4">
+                            <p class="text-gray-900 text-base font-medium">
+                              {{ childLink.title }}
+                            </p>
+                          </div>
+                        </a>
+
+                      {% endif %}
+
                     {% endfor %}
 
                   <!-- CREATE THE SUBLINK -->
@@ -69,14 +107,20 @@
 
       </nav>
 
+
       <div class="hidden md:flex items-center justify-end md:flex-1 space-x-5">
         <a href="{{ routes.cart_url }}" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
           {% render 'icon-shopping-bag' %}
         </a>
 
-        <a href="{{ routes.account_login_url }}" class="text-base text-gray-500 hover:text-gray-900">Login</a>
-        <a href="{{ routes.account_register_url }}" class="text-base text-gray-500 hover:text-gray-900">Register</a>
+        {% if shop.customer_accounts_enabled %}
+
+          <a href="{{ routes.account_login_url }}" class="text-base text-gray-500 hover:text-gray-900">Login</a>
+          <a href="{{ routes.account_register_url }}" class="text-base text-gray-500 hover:text-gray-900">Register</a>
+        {% endif %}
       </div>
+
+
     </div>
   </div>
 
@@ -91,7 +135,9 @@
         <!-- MOBILE MENU HEADER TITLE PLUS CLOSE BUTTON -->
         <div class="flex items-center justify-between pb-3">
           <div>
-            <h1 class="text-lg text-gray-500">{{ shop.name }}</h1>
+            <a href="/">
+              <h2 class="text-lg text-gray-500 font-bold">{{ section.settings.mobile-menu-title }}</h2>
+            </a>
           </div>
           <div class="-mr-2">
             <button
@@ -106,10 +152,12 @@
         <!-- NAVIGATION LINKS FOR MOBILE MENU -->
         <div class="pt-3">
           <nav x-data="{
-            open: false
+            open: false,
+            secondDropdown: false
+            
           }" class="grid gap-y-7">
 
-            {% for link in linklists['main-menu'].links %}
+            {% for link in mobile-link-list %}
               {% if link.links != empty %}
                 <div class="relative">
                   <button
@@ -127,11 +175,41 @@
                     x-transition
                     x-show="open"
                     @click.away="open = false"
-                    class="grid gap-y-7 py-3">
+                    class="grid gap-y-4 py-3 mt-3">
                     {% for childLink in link.links %}
-                      <a href="{{ childLink.url }}" class="-m-3 p-3 mt-2 flex items-center rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-50">
-                        <span class="ml-3 text-base font-medium text-gray-500">{{ childLink.title }}</span>
-                      </a>
+                      {% if childLink.links != empty %}
+                        <button
+                          x-transition
+                          @click="secondDropdown = !secondDropdown"
+                          type="button"
+                          class="p-3 flex w-full items-center rounded-md text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50">
+                          <div>
+                            {{ link.title }}
+                          </div>
+                          {% render 'icon-dropdown' %}
+                        </button>
+
+                        <div
+                          x-cloak
+                          x-transition
+                          x-show="secondDropdown"
+                          @click.away="secondDropdown = false"
+                          class="grid gap-y-1 mb-2">
+
+                          {% for childLink2 in childLink.links %}
+                            <a href="{{ childLink2.url }}" class="p-3 flex           items-center rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-50">
+                              <span class="ml-4 text-base font-medium text-gray-500">{{ childLink2.title }}</span>
+                            </a>
+                          {% endfor %}
+                        </div>
+
+                      {% else %}
+                        <a href="{{ childLink.url }}" class="-m-3 p-3 flex items-center rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-50">
+                          <span class="ml-3 text-base font-medium text-gray-500">{{ childLink.title }}</span>
+                        </a>
+
+                      {% endif %}
+
                     {% endfor %}
 
 
@@ -152,3 +230,30 @@
     </div>
   </div>
 </div>
+
+{% schema %}
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "text",
+        "id": "mobile-menu-title",
+        "label": "Title",
+        "default": "Menu",
+        "info": "Setting to customize the header title for mobile menu"
+      }, {
+        "type": "link_list",
+        "id": "desktop-header-menu",
+        "default": "main-menu",
+        "label": "Desktop Menu",
+        "info": "Menu to display on desktop header"
+      }, {
+        "type": "link_list",
+        "id": "mobile-header-menu",
+        "default": "main-menu",
+        "label": "Mobile Menu",
+        "info": "Menu to display on mobile header"
+      }
+    ]
+  }
+{% endschema %}
