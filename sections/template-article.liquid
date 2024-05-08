@@ -1,29 +1,51 @@
-{% for block in section.blocks %}
-  {% case block.type %}
-    {% when 'article_title' %}
-      <h1>{{ article.title }}</h1>
+<article>
+  {% for block in section.blocks %}
 
-    {% when 'article_author' %}
-      <small>{{ article.author }}</small>
-
-    {% when 'article_published_at' %}
-      <time datetime="{{ article.published_at |  date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y-%m-%d' }}</time>
-
-    {% when 'featured_image' %}
-      <img
-        src="{{ article.image |  image_url: width: 500}}"
-        alt="{{article.image.alt}}"
-        loading="lazy"
-        width="500"
-        height="">
-
-    {% when 'article_content' %}
-      <div>{{ article.content }}</div>
+    {% case block.settings.content_alignment %}
+      {% when 'left' %}
+        {% assign content-alignment = 'left' %}
+      {% when 'center' %}
+        {% assign content-alignment = 'center' %}
+      {% when 'right' %}
+        {% assign content-alignment = 'right' %}
+    {% endcase %}
 
 
-  {% endcase %}
+    {% case block.type %}
+      {% when 'article_title' %}
+        <div class="flex items-center justify-center">
+          <div class="max-w-7xl text-{{ content-alignment }}">
+            <a href="{{ blog.url }}" class="text-base uppercase text-gray-500 hover:text-gray-900 font-bold">{{ blog.title }}</a>
+            <h1 class="text-4xl md:text-6xl font-medium mt-1">{{ article.title }}</h1>
+          </div>
+        </div>
 
-{% endfor %}
+
+      {% when 'article_author' %}
+        <div class="max-w-7xl text-center">
+          <small>{{ article.author }}</small>
+        </div>
+
+
+      {% when 'article_published_at' %}
+        <time datetime="{{ article.published_at |  date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y-%m-%d' }}</time>
+
+      {% when 'featured_image' %}
+        <img
+          src="{{ article.image |  image_url: width: 500}}"
+          alt="{{article.image.alt}}"
+          loading="lazy"
+          width="500"
+          height="">
+
+      {% when 'article_content' %}
+        <div class="text-{{ content-alignment }}">{{ article.content }}</div>
+
+
+    {% endcase %}
+
+  {% endfor %}
+</article>
 
 
 {% schema %}
@@ -34,7 +56,27 @@
       {
         "type": "article_title",
         "name": "Title",
-        "limit": 1
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "content_alignment",
+            "label": "Alignment",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              }, {
+                "value": "center",
+                "label": "Center"
+              }, {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "center"
+          }
+        ]
       },
       {
         "type": "article_author",
@@ -53,7 +95,27 @@
       }, {
         "type": "article_content",
         "name": "Content",
-        "limit": 1
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "content_alignment",
+            "label": "Alignment",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              }, {
+                "value": "center",
+                "label": "Center"
+              }, {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "center"
+          }
+        ]
       }
     ]
   }
