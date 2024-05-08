@@ -3,25 +3,29 @@
     "template": {
       "type": "template-article",
       "blocks": {
+        "thumbnail": {
+          "type": "featured_image",
+          "settings": {
+            "content_alignment": "center"
+          }
+        },
         "title": {
           "type": "article_title",
           "settings": {
-            "content_alignment": "center"
+            "content_alignment": "center",
+            "show_blog_name": true
           }
         },
         "author": {
           "type": "article_author",
           "settings": {
-          }
-        },
-        "thumbnail": {
-          "type": "featured_image",
-          "settings": {
+            "content_alignment": "center"
           }
         },
         "published-at": {
           "type": "article_published_at",
           "settings": {
+            "content_alignment": "center"
           }
         },
         "content": {
@@ -32,9 +36,9 @@
         }
       },
       "block_order": [
+        "thumbnail",
         "title",
         "author",
-        "thumbnail",
         "published-at",
         "content"
       ],
