@@ -3,18 +3,18 @@
 
     {% case block.settings.content_alignment %}
       {% when 'left' %}
-        {% assign content-alignment = 'text-left' %}
+        {% assign content-alignment = 'left' %}
       {% when 'right' %}
-        {% assign content-alignment = 'text-right' %}
+        {% assign content-alignment = 'right' %}
       {% when 'center' %}
-        {% assign content-alignment = 'text-center' %}
+        {% assign content-alignment = 'center' %}
     {% endcase %}
 
 
     {% case block.type %}
       {% when 'article_title' %}
         <div class="flex items-center justify-center">
-          <div class="max-w-7xl {{ content-alignment }}">
+          <div class="max-w-7xl text-{{ content-alignment }}">
             <a href="{{ blog.url }}" class="text-base uppercase text-gray-500 hover:text-gray-900 font-bold">{{ blog.title }}</a>
             <h1 class="text-4xl md:text-6xl font-medium mt-1">{{ article.title }}</h1>
           </div>
@@ -39,7 +39,7 @@
           height="">
 
       {% when 'article_content' %}
-        <div class="{{ content-alignment }}">{{ article.content }}</div>
+        <div class="text-{{ content-alignment }}">{{ article.content }}</div>
 
 
     {% endcase %}
