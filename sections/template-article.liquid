@@ -1,38 +1,35 @@
-<h1>{{ article.title }}</h1>
+{% for block in section.blocks %}
+  {% case block.type %}
+    {% when 'article_title' %}
+      <h1>{{ article.title }}</h1>
 
-{% if section.settings.enable_author %}
-  <small>{{ article.author }}</small>
-{% endif %}
+    {% when 'article_author' %}
+      <small>{{ article.author }}</small>
 
-{% if section.settings.enable_published_date %}
-  <time datetime="{{ article.published_at |  date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y-%m-%d' }}</time>
-{% endif %}
+    {% when 'article_published_at' %}
+      <time datetime="{{ article.published_at |  date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y-%m-%d' }}</time>
 
-<img
-  src="{{ article.image |  image_url: width: 500}}"
-  alt="{{article.image.alt}}"
-  loading="lazy"
-  width="500"
-  height="">
+    {% when 'featured_image' %}
+      <img
+        src="{{ article.image |  image_url: width: 500}}"
+        alt="{{article.image.alt}}"
+        loading="lazy"
+        width="500"
+        height="">
 
-<div>{{ article.content }}</div>
+    {% when 'article_content' %}
+      <div>{{ article.content }}</div>
+
+
+  {% endcase %}
+
+{% endfor %}
+
 
 {% schema %}
   {
-    "name": "Template Article",
-    "settings": [
-      {
-        "type": "checkbox",
-        "id": "enable_author",
-        "default": true,
-        "label": "Show author name"
-      }, {
-        "type": "checkbox",
-        "id": "enable_published_date",
-        "default": true,
-        "label": "Show published date"
-      }
-    ],
+    "name": "Article",
+    "settings": [],
     "blocks": [
       {
         "type": "article_title",
