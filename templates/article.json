@@ -6,6 +6,7 @@
         "title": {
           "type": "article_title",
           "settings": {
+            "content_alignment": "center"
           }
         },
         "author": {
@@ -26,6 +27,7 @@
         "content": {
           "type": "article_content",
           "settings": {
+            "content_alignment": "right"
           }
         }
       },
