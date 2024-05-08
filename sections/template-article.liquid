@@ -4,10 +4,13 @@
     {% case block.settings.content_alignment %}
       {% when 'left' %}
         {% assign content-alignment = 'left' %}
+        {% assign justify-alignment = 'start' %}
       {% when 'right' %}
         {% assign content-alignment = 'right' %}
+        {% assign justify-alignment = 'end' %}
       {% when 'center' %}
         {% assign content-alignment = 'center' %}
+        {% assign justify-alignment = 'center' %}
     {% endcase %}
 
 
