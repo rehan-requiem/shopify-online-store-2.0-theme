@@ -27,7 +27,7 @@
         "content": {
           "type": "article_content",
           "settings": {
-            "content_alignment": "right"
+            "content_alignment": "center"
           }
         }
       },
