@@ -24,21 +24,27 @@
 
 
       {% when 'article_author' %}
-        <div class="max-w-7xl text-center">
+        <div class="max-w-7xl text-{{ content-alignment }}">
           <small>{{ article.author }}</small>
         </div>
 
 
       {% when 'article_published_at' %}
-        <time datetime="{{ article.published_at |  date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y-%m-%d' }}</time>
+        <div class="max-w-7xl text-{{ content-alignment }}">
+          <time datetime="{{ article.published_at |  date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y-%m-%d' }}</time>
+        </div>
+
 
       {% when 'featured_image' %}
-        <img
-          src="{{ article.image |  image_url: width: 500}}"
-          alt="{{article.image.alt}}"
-          loading="lazy"
-          width="500"
-          height="">
+        <div class="max-w-7xl text-{{ content-alignment }}">
+          <img
+            src="{{ article.image |  image_url: width: 500}}"
+            alt="{{article.image.alt}}"
+            loading="lazy"
+            width="500"
+            height="">
+        </div>
+
 
       {% when 'article_content' %}
         <div class="text-{{ content-alignment }}">{{ article.content }}</div>
@@ -88,17 +94,77 @@
       {
         "type": "article_author",
         "name": "Author",
-        "limit": 1
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "content_alignment",
+            "label": "Alignment",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              }, {
+                "value": "center",
+                "label": "Center"
+              }, {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "center"
+          }
+        ]
       },
       {
         "type": "article_published_at",
         "name": "Published Date",
-        "limit": 1
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "content_alignment",
+            "label": "Alignment",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              }, {
+                "value": "center",
+                "label": "Center"
+              }, {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "center"
+          }
+        ]
       },
       {
         "type": "featured_image",
         "name": "Thumbnail",
-        "limit": 1
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "content_alignment",
+            "label": "Alignment",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              }, {
+                "value": "center",
+                "label": "Center"
+              }, {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "center"
+          }
+        ]
       }, {
         "type": "article_content",
         "name": "Content",
