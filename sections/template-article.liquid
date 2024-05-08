@@ -24,30 +24,38 @@
 
 
       {% when 'article_author' %}
-        <div class="max-w-7xl text-{{ content-alignment }}">
-          <small>{{ article.author }}</small>
+        <div class="flex items-center justify-center">
+          <div class="max-w-7xl text-{{ content-alignment }}">
+            <small>{{ article.author }}</small>
+          </div>
         </div>
 
 
       {% when 'article_published_at' %}
-        <div class="max-w-7xl text-{{ content-alignment }}">
-          <time datetime="{{ article.published_at |  date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y-%m-%d' }}</time>
+        <div class="flex items-center justify-center">
+          <div class="max-w-7xl text-{{ content-alignment }}">
+            <time datetime="{{ article.published_at |  date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y-%m-%d' }}</time>
+          </div>
         </div>
 
 
       {% when 'featured_image' %}
-        <div class="max-w-7xl text-{{ content-alignment }}">
-          <img
-            src="{{ article.image |  image_url: width: 500}}"
-            alt="{{article.image.alt}}"
-            loading="lazy"
-            width="500"
-            height="">
+        <div class="flex items-center justify-center">
+          <div class="max-w-7xl text-{{ content-alignment }}">
+            <img
+              src="{{ article.image |  image_url: width: 500}}"
+              alt="{{article.image.alt}}"
+              loading="lazy"
+              width="500"
+              height="">
+          </div>
         </div>
 
 
       {% when 'article_content' %}
-        <div class="text-{{ content-alignment }}">{{ article.content }}</div>
+        <div class="flex items-center justify-center">
+          <div class="max-w-7xl text-{{ content-alignment }}">{{ article.content }}</div>
+        </div>
 
 
     {% endcase %}
