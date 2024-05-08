@@ -2,8 +2,17 @@
   "sections": {
     "template": {
       "type": "template-article",
-      "settings": {
-      }
+      "blocks": {
+        "title":{ "type": "article_title"},
+        "author": { "type": "article_author"},
+        "published-at": { "type": "article_published_at"},
+        "thumbnail": { "type": "featured_image"},
+        "content": { "type": "article_content"}
+      },
+
+      "block_order": [
+        "title", "author", "published-at", "thumbnail", "content"
+      ]
     }
   },
   "order": [
