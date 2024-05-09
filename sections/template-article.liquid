@@ -46,14 +46,14 @@
         <div class="max-w-7xl bg-blue-100 rounded-lg mx-2 md:mx-auto overflow-hidden flex justify-{{ justify-alignment }}">
           {% if article.image != blank %}
             <img
-              src="{{ article.image |  image_url: width: 600, height: 600}}"
+              src="{{ article.image |  image_url}}"
+              class="w-full h-80 md:h-96 object-cover object-centter"
               alt="{{article.image.alt}}"
-              loading="lazy"
-              width="600"
-              height="600">
+              loading="lazy">
 
           {% else %}
             {% assign placeholder_image = 'lifestyle-2' %}
+            {{ placeholder_image | placeholder_svg_tag: 'w-full h-80 md:h-96 object-cover object-centter p-5' }}
           {% endif %}
 
         </div>
