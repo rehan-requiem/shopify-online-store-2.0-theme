@@ -6,7 +6,7 @@
         "title": {
           "type": "article_title",
           "settings": {
-            "content_alignment": "center",
+            "content_alignment": "left",
             "show_blog_name": true
           }
         },
