@@ -37,21 +37,25 @@
       {% when 'article_published_at' %}
         <div class="flex px-4 items-center justify-{{ justify-alignment }}">
           <div class="max-w-7xl text-{{ content-alignment }}">
-            <time datetime="{{ article.published_at |  date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y-%m-%d' }}</time>
+            <time datetime="{{ article.published_at |  date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'on_date' }}</time>
           </div>
         </div>
 
 
       {% when 'featured_image' %}
-        <div class="flex px-4 items-center justify-{{ justify-alignment }}">
-          <div class="max-w-7xl text-{{ content-alignment }}">
+        <div class="max-w-7xl bg-blue-100 rounded-lg mx-2 md:mx-auto overflow-hidden flex justify-{{ justify-alignment }}">
+          {% if article.image != blank %}
             <img
-              src="{{ article.image |  image_url: width: 500}}"
+              src="{{ article.image |  image_url: width: 600}}"
               alt="{{article.image.alt}}"
               loading="lazy"
-              width="500"
-              height="">
-          </div>
+              width="600"
+              height="600">
+
+          {% else %}
+            {% assign placeholder_image = 'lifestyle-2' %}
+          {% endif %}
+
         </div>
 
 
