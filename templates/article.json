@@ -31,7 +31,7 @@
         "content": {
           "type": "article_content",
           "settings": {
-            "content_alignment": "center"
+            "content_alignment": "left"
           }
         }
       },
