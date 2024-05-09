@@ -46,7 +46,7 @@
         <div class="max-w-7xl bg-blue-100 rounded-lg mx-2 md:mx-auto overflow-hidden flex justify-{{ justify-alignment }}">
           {% if article.image != blank %}
             <img
-              src="{{ article.image |  image_url: width: 600}}"
+              src="{{ article.image |  image_url: width: 600, height: 600}}"
               alt="{{article.image.alt}}"
               loading="lazy"
               width="600"
