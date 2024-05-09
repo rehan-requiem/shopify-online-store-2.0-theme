@@ -1,4 +1,4 @@
-<article class="px-1">
+<article class="px-1 py-8">
   {% for block in section.blocks %}
 
     {% case block.settings.content_alignment %}
@@ -43,7 +43,7 @@
 
 
       {% when 'featured_image' %}
-        <div class="max-w-7xl bg-blue-100 rounded-lg mx-2 md:mx-auto overflow-hidden flex justify-center">
+        <div class="max-w-7xl bg-blue-100 rounded-lg mx-2 md:mx-auto overflow-hidden flex justify-center my-4">
           {% if article.image != blank %}
             <img
               src="{{ article.image |  image_url}}"
@@ -60,8 +60,10 @@
 
 
       {% when 'article_content' %}
-        <div class="flex px-3 md:px-0 items-center justify-center">
-          <div class="max-w-7xl text-{{ content-alignment }} mx-auto">{{ article.content }}</div>
+        <div class="flex px-3 md:px-0 items-center justify-center max-w-7xl mx-auto">
+          <div id="content" class="w-full text-{{ content-alignment }}">
+            {{ article.content }}
+          </div>
         </div>
 
 
@@ -69,6 +71,38 @@
 
   {% endfor %}
 </article>
+
+<style>
+  h2 {
+    font-size: 26px;
+    line-height: 2.25rem;
+    font-weight: 500;
+  }
+
+  h3,
+  h4,
+  h5 {
+    font-size: 23px;
+    line-height: 2.2rem;
+    font-weight: 500;
+  }
+
+  @media (min-width: 768px) {
+    h2 {
+      font-size: 30px;
+      line-height: 2.5rem;
+      font-weight: 500;
+    }
+
+    h3,
+    h4,
+    h5 {
+      font-size: 27px;
+      line-height: 2.3rem;
+      font-weight: 500;
+    }
+  }
+</style>
 
 
 {% schema %}
