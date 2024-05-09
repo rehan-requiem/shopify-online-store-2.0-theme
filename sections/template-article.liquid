@@ -1,4 +1,4 @@
-<article class="container mx-auto flex flex-col px-4">
+<article class="px-4">
   {% for block in section.blocks %}
 
     {% case block.settings.content_alignment %}
@@ -16,48 +16,52 @@
 
     {% case block.type %}
       {% when 'article_title' %}
-        <div class="max-w-7xl text-{{ content-alignment }}">
-          {% if block.settings.show_blog_name %}
-            <a href="{{ blog.url }}" class="text-base uppercase text-gray-500 hover:text-gray-900 font-bold">{{ blog.title }}</a>
-          {% endif %}
-          <h1 class="text-4xl md:text-6xl font-medium mt-1">{{ article.title }}</h1>
+        <div class="flex px-3 md:px-0 max-w-7xl items-center justify-center mx-auto">
+          <div class="w-full text-{{ content-alignment }} ">
+            {% if block.settings.show_blog_name %}
+              <a href="{{ blog.url }}" class="text-base uppercase text-gray-500 hover:text-gray-900 font-bold">{{ blog.title }}</a>
+            {% endif %}
+            <h1 class="text-4xl md:text-6xl font-medium mt-1">{{ article.title }}</h1>
+          </div>
         </div>
 
 
       {% when 'article_author' %}
-        <div class="max-w-7xl text-{{ content-alignment }}">
-          <small>{{ article.author }}</small>
+        <div class="flex px-3 md:px-0 max-w-7xl items-center justify-center mx-auto">
+          <div class="w-full text-{{ content-alignment }}">
+            <small>{{ article.author }}</small>
+          </div>
         </div>
 
 
       {% when 'article_published_at' %}
-        <div class="max-w-7xl text-{{ content-alignment }}">
-          <time datetime="{{ article.published_at |  date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'on_date' }}</time>
+        <div class="flex px-3 md:px-0 max-w-7xl items-center justify-center mx-auto">
+          <div class="w-full text-{{ content-alignment }}">
+            <time datetime="{{ article.published_at |  date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'on_date' }}</time>
+          </div>
         </div>
 
+
       {% when 'featured_image' %}
-        <div class="container mx-auto px-4">
-          <div class="max-w-7xl bg-blue-100 rounded-lg mx-2 md:mx-auto overflow-hidden flex justify-center">
-            {% if article.image != blank %}
-              <img
-                src="{{ article.image |  image_url}}"
-                class="w-full h-80 md:h-96 object-cover object-centter"
-                alt="{{article.image.alt}}"
-                loading="lazy">
+        <div class="max-w-7xl bg-blue-100 rounded-lg mx-2 md:mx-auto overflow-hidden flex justify-center">
+          {% if article.image != blank %}
+            <img
+              src="{{ article.image |  image_url}}"
+              class="w-full h-80 md:h-96 object-cover object-centter"
+              alt="{{article.image.alt}}"
+              loading="lazy">
 
-            {% else %}
-              {% assign placeholder_image = 'lifestyle-2' %}
-              {{ placeholder_image | placeholder_svg_tag: 'w-full h-80 md:h-96 object-cover object-centter p-5' }}
-            {% endif %}
-
-          </div>
+          {% else %}
+            {% assign placeholder_image = 'lifestyle-2' %}
+            {{ placeholder_image | placeholder_svg_tag: 'w-full h-80 md:h-96 object-cover object-centter p-5' }}
+          {% endif %}
 
         </div>
 
 
       {% when 'article_content' %}
-        <div class="flex px-4 items-center justify-{{ justify-alignment }}">
-          <div class="max-w-7xl text-{{ content-alignment }}">{{ article.content }}</div>
+        <div class="flex px-3 md:px-0 items-center justify-center">
+          <div class="max-w-7xl text-{{ content-alignment }} mx-auto">{{ article.content }}</div>
         </div>
 
 
@@ -155,7 +159,27 @@
       {
         "type": "featured_image",
         "name": "Thumbnail",
-        "limit": 1
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "content_alignment",
+            "label": "Alignment",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              }, {
+                "value": "center",
+                "label": "Center"
+              }, {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "center"
+          }
+        ]
       }, {
         "type": "article_content",
         "name": "Content",
