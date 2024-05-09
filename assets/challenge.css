@@ -1,0 +1,26 @@
+.shopify-challenge__container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4rem;
+}
+
+.shopify-challenge__button.btn {
+    --tw-bg-opacity: 1;
+    --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+    padding-block: 0.5rem;
+    padding-inline: 1.25rem;
+    transition: 100ms all ease-in;
+    background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+    color: white;
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.shopify-challenge__button:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}
