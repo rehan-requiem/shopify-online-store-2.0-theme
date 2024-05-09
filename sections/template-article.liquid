@@ -78,10 +78,14 @@
           {% for comment in article.comments %}
             <div class="flex-1 border my-4 py-2 px-4 sm:px-6 sm:py-4 leading-relaxed">
               <span class="comment-author">{{ comment.author }}</span>
-              <span class="text-xs text-gray-400">{{ comment.created_at | date: format: 'default' }}</span>
-              <p class="text-small"></p>
+              <span class="text-xs ml-1 text-gray-400">{{ comment.created_at | date: format: 'default' }}</span>
+              <p class="text-sm">{{ comment.content }}</p>
             </div>
           {% endfor %}
+
+          {% if paginate.pages %}
+            {{ paginate | default_pagination }}
+          {% endif %}
         {% endpaginate %}
       </div>
     {% else %}
@@ -94,6 +98,37 @@
     {% form 'new_comment'
       , article %}
       <div class="flex-1 flex-col mx-auto items-center justify-center max-w-5xl px-4">
+        {% if form.errors %}
+
+          <div class="border p-5">
+            <div class="flex flex-row items-center w-full my-3">
+              <div class="text-red-500">
+                {% render 'icon-failed' %}
+              </div>
+              <div class="text-sm font-medium ml-3">
+                Error! comment not posted
+              </div>
+            </div>
+
+            <ul class="px-4 mb-3 ml-7 list-decimal">
+              {% for error in form.errors %}
+                <li>
+                  <span>{{ form.errors.message[error] }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% elsif form.posted_successfully? %}
+          <div class="dlex flex-row items-center my-3 m-5">
+            <div class="text-green-500">
+              {% render 'icon-success' %}
+            </div>
+            <div class="text-sm font-medium ml-3">
+              Comment posted successfully
+            </div>
+          </div>
+          Comment posted successfully
+        {% endif %}
         <div class="px-1 md:flex mb-3 ">
           <div class="px-3 md:w-1/2">
             <label for="comment_author" class="text-gray-700 font-medium uppercase text-xs mb-2">Name</label>
