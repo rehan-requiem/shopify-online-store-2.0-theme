@@ -32,7 +32,7 @@
       {% when 'article_author' %}
         <div class="flex px-3 md:px-0 max-w-7xl items-center justify-center mx-auto">
           <div class="w-full text-{{ content-alignment }}">
-            <small itemtype="http://schema.org/Person" itemprop="author">{{ article.author }}</small>
+            <small itemprop="author">{{ article.author }}</small>
           </div>
         </div>
 
@@ -221,6 +221,32 @@
     }
   }
 </style>
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ article.title | json }},
+    "articleBody": {{ article.content | strip_html | json }},
+    {% if article.excerpt != blank %}
+      "description": {{ article.excerpt | strip_html | json }},
+      {% endif %}
+      {% if article.image %}
+        "image" : [{{ article.image | image_url: width: 250 |  prepend: 'https:' | json }}],
+        {% endif %}
+        "datePublished": {{ article.published_at | date: format: 'default' | json }},
+        "dateCreated": {{ article.created_at | date: format: 'default' | json }},
+        "author": {
+          "@type": "Person",
+          "name": {{ article.author | json }},
+          "url": {{ shop.secure_url | json }}
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": {{ shop.name | json }}
+        }
+      }
+</script>
 
 
 {% schema %}
