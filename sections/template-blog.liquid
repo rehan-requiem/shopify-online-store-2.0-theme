@@ -1,35 +1,60 @@
-{% paginate blog.articles by section.settings.posts_per_page %}
-  {% for article in blog.articles %}
-    <div>
-      {% if article.image != blank %}
-        <img
-          src="{{ article.image |  image_url: width: 300 }}"
-          alt="{{ article.image.alt }}"
-          width="300"
-          height="">
+<div class="py-8">
 
-      {% else %}
-        {{ 'image' | placeholder_svg_tag: 'w-20' }}
-      {% endif %}
-      <h1>{{ article.title }}</h1>
+  {% paginate blog.articles by section.settings.posts_per_page %}
+    <h1 class="text-center text-3xl mb-4 font-medium">{{ blog.title }}</h1>
 
-      {% if section.settings.show_description %}
-        {% if article.excerpt.size > 0 %}
-          {{ article.excerpt | strip_html }}
-        {% else %}
-          <p>{{ article.content | strip_html | truncatewords: 100 }}</p>
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {% for article in blog.articles %}
+          <div class="w-full py-6 px-4">
+            <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+              {% if article.image != blank %}
+                <a href="{{ article.url }}">
+                  <img
+                  src="{{ article.image |  image_url: width: 300 }}"
+                  class="w-full h-80 object-cover"
+                  alt="{{ article.image.alt }}">
+              {% else %}
+                <a href="{{ article.url }}">
+                  {{ 'image' | placeholder_svg_tag: 'w-full h-80 object-cover bg-gray-100' }}
+                </a>
+                
+              {% endif %}
+              </a>
+              <div class="p-4">
+                <h1 class="text-xl font-medium my-4">{{ article.title }}</h1>
 
-        {% endif %}
-      {% endif %}
+              {% if section.settings.show_description %}
+                {% if article.excerpt.size > 0 %}
+                  {{ article.excerpt | strip_html | truncatewords: 10 }}
+                {% else %}
+                  <p>{{ article.content | strip_html | truncatewords: 10 }}</p>
+                {% endif %}
+              {% endif %}
+              <a href="{{ article.url }}" class="font-medium text-blue-600 hover:text-blue-800 block my-4">{{ section.settings.read_more_label }}</a>
+              </div>
+            </div>
 
+
+          </div>
+        {% endfor %}
+      </div>
     </div>
-  {% endfor %}
-{% endpaginate %}
+
+  {% endpaginate %}
+</div>
+
 
 {% schema %}
   {
     "name": "Blog",
     "settings": [
+      {
+        "type": "text",
+        "id": "read_more_label",
+        "label": "Read more label",
+        "default": "Read more"
+      },
       {
         "type": "range",
         "id": "posts_per_page",
