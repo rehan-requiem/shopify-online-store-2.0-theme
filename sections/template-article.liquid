@@ -90,9 +90,10 @@
             </div>
           {% endfor %}
 
-          {% if paginate.pages %}
-            {{ paginate | default_pagination }}
-          {% endif %}
+          <div class="max-w-5xl mx-auto">
+            {% render 'pagination'
+              , snippet_paginate: paginate %}
+          </div>
         {% endpaginate %}
       </div>
     {% else %}

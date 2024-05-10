@@ -1,0 +1,33 @@
+{% comment %} 
+                                Accepts: 
+                                - snippet_paginate  
+                                          
+ {% endcomment %}
+
+{% if snippet_paginate.pages > 0 %}
+  <nav>
+    <ul role="navigation" class="flex justify-center my-8">
+
+      {% if snippet_paginate.previous.is_link %}
+        <a href="{{ snippet_paginate.previous.url }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white px-6 py-2 mx-1 rounded-sm font-medium">{{ snippet_paginate.previous.title }}</a>
+      {% endif %}
+
+      {% if snippet_paginate.pages > 2 %}
+        {% for page in snippet_paginate.parts %}
+          {% if page.is_link %}
+            <a href="{{ page.url }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white px-3 py-2 mx-1 rounded-sm font-medium">{{ page.title }}</a>
+
+          {% else %}
+            <span class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white px-3 py-2 mx-1 rounded-sm font-medium">{{ page.title }}</span>
+          {% endif %}
+
+        {% endfor %}
+      {% endif %}
+
+
+      {% if snippet_paginate.next.is_link %}
+        <a href="{{ snippet_paginate.next.url }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white px-6 py-2 mx-1 rounded-sm font-medium">{{ snippet_paginate.next.title }}</a>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}

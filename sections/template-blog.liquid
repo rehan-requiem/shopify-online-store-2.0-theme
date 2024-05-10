@@ -34,11 +34,13 @@
               <a href="{{ article.url }}" class="font-medium text-blue-600 hover:text-blue-800 block my-4">{{ section.settings.read_more_label }}</a>
               </div>
             </div>
-
-
           </div>
         {% endfor %}
       </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4">
+      {% render 'pagination', snippet_paginate: paginate %}
     </div>
 
   {% endpaginate %}
