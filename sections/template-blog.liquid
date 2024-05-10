@@ -1,4 +1,4 @@
-{% paginate blog.articles by {{ section.settings.posts_per_page }} %}
+{% paginate blog.articles by section.settings.posts_per_page %}
   {% for article in blog.articles %}
     <div>
       {% if article.image != blank %}
