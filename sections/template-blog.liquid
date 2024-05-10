@@ -1,4 +1,4 @@
-{{ section.settings.blogs_posts_per_page }}
+{{ section.settings.posts_per_page }}
 {% paginate blog.articles by {{ section.settings.posts_per_page }} %}
   {% for article in blog.articles %}
     <div>
