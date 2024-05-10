@@ -31,11 +31,8 @@
 
       {% when 'article_author' %}
         <div class="flex px-3 md:px-0 max-w-7xl items-center justify-center mx-auto">
-          <div
-            itemscope
-            itemtype="http://schema.org/Person"
-            class="w-full text-{{ content-alignment }}">
-            <small itemprop="author">{{ article.author }}</small>
+          <div class="w-full text-{{ content-alignment }}">
+            <small itemtype="http://schema.org/Person" itemprop="author">{{ article.author }}</small>
           </div>
         </div>
 
@@ -49,9 +46,10 @@
 
 
       {% when 'featured_image' %}
-        <div itemprop="image" class="max-w-7xl bg-blue-100 rounded-lg mx-2 md:mx-auto overflow-hidden flex justify-center my-4">
+        <div class="max-w-7xl bg-blue-100 rounded-lg mx-2 md:mx-auto overflow-hidden flex justify-center my-4">
           {% if article.image != blank %}
             <img
+              itemprop="image"
               src="{{ article.image |  image_url}}"
               class="w-full h-80 md:h-96 object-cover object-centter"
               alt="{{article.image.alt}}"
