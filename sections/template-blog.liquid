@@ -2,19 +2,26 @@
   {% for article in blog.articles %}
     <div>
       {% if article.image != blank %}
-        <img src="{{ article.image |  image_url: width: 300 }}" alt="{{ article.image.alt }}" width="300" height="">
+        <img
+          src="{{ article.image |  image_url: width: 300 }}"
+          alt="{{ article.image.alt }}"
+          width="300"
+          height="">
 
       {% else %}
         {{ 'image' | placeholder_svg_tag: 'w-20' }}
       {% endif %}
       <h1>{{ article.title }}</h1>
 
-      {% if article.excerpt.size > 0 %}
+      {% if section.settings.show_description %}
+        {% if article.excerpt.size > 0 %}
+          {{ article.excerpt | strip_html }}
+        {% else %}
+          <p>{{ article.content | strip_html | truncatewords: 100 }}</p>
 
-      {% else %}
-        <p>{{ article.content | strip_html | truncatewords: 100 }}</p>
-
+        {% endif %}
       {% endif %}
+
     </div>
   {% endfor %}
 {% endpaginate %}
@@ -31,6 +38,11 @@
         "max": 6,
         "step": 1,
         "default": 3
+      }, {
+        "type": "checkbox",
+        "id": "show_description",
+        "label": "Show post description",
+        "default": true
       }
     ]
   }
