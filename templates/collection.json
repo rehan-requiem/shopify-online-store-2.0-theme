@@ -4,7 +4,8 @@
       "type": "template-collection",
       "settings": {
         "number_of_products": 6,
-        "show_vendor": true
+        "show_vendor": true,
+        "zoom_on_hover": true
       }
     }
   },
