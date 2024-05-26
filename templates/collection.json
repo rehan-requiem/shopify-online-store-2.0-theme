@@ -3,6 +3,7 @@
     "template": {
       "type": "template-collection",
       "settings": {
+        "number_of_products": 3
       }
     }
   },
