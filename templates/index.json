@@ -12,7 +12,8 @@
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "featured_collection": "all"
+        "title": "Featured collection title",
+        "featured_collection": ""
       }
     }
   },
