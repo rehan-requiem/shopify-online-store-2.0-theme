@@ -2,9 +2,13 @@
   <h1 class="text-center text-3xl">{{ section.settings.title }}</h1>
   <div class="max-w-6xl mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-4">
-      {% for product in section.settings.featured_collection.products limit: 4 %}
+      {% for product in section.settings.featured_collection.products limit: section.settings.product_limit %}
         {% render 'product-card'
           , product: product %}
+      {% else %}
+        {% for item in (1..4) %}
+          {% render 'product-card-placeholder' %}
+        {% endfor %}
       {% endfor %}
     </div>
   </div>
@@ -24,6 +28,14 @@
         "type": "collection",
         "id": "featured_collection",
         "label": "Collection"
+      }, {
+        "type": "range",
+        "id": "product_limit",
+        "default": 4,
+        "label": "Number of products to display",
+        "min": 1,
+        "max": 20,
+        "step": 5
       }
     ],
 
